@@ -13,6 +13,8 @@ var _trailsConfig = {
   topV: 0,
   /**@type {number} */
   bottomV: 0,
+  /**@type {ParticleStyle} */
+  particleStyle: new ParticleStyle1(),
 };
 /**
  * @typedef {(ComplexNumber)=>ComplexNumber} ComplexFunc
@@ -29,6 +31,7 @@ class Particle {
     this.age = 0;
     this.fz = f(z);
     this.fzSize = this.fz.getR();
+    this.level = Math.log10(this.fzSize);
     this.next = undefined;
     this.updateXY();
   }
@@ -39,19 +42,20 @@ class Particle {
 
   draw() {
     this.updateXY();
-    var level = map(
-      log(this.fzSize),
-      _trailsConfig.minSize,
-      _trailsConfig.maxSize,
-      0,
-      1,
-      true
+    var color = _trailsConfig.particleStyle.color(
+      _trailsConfig.minLevel,
+      this.level,
+      _trailsConfig.maxLevel,
+      this.age
     );
-    var r = 127 - 127 * level;
-    var g = 60 + 160 * level;
-    var b = 255;
-    var a = map(this.age, 0, 10, 255, 0);
-    stroke(r, g, b, a);
+    stroke(color);
+    var weight = _trailsConfig.particleStyle.weight(
+      _trailsConfig.minLevel,
+      this.level,
+      _trailsConfig.maxLevel,
+      this.age
+    );
+    strokeWeight(weight);
     if (this.next) {
       line(this.x, this.y, this.next.x, this.next.y);
     } else {
