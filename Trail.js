@@ -2,9 +2,9 @@ var _trailsConfig = {
   /**@type {Transformer} */
   tf: null,
   /**@type {number} */
-  minSize: 0,
+  minLevel: 0,
   /**@type {number} */
-  maxSize: 10,
+  maxLevel: 0,
   /**@type {number} */
   leftU: 0,
   /**@type {number} */
@@ -120,22 +120,15 @@ class Trails {
   /**
    *
    * @param {Transformer} tf
-   * @param {number} minSize
-   * @param {number} maxSize
    * @param {ComplexFunc} f
    */
-  constructor(tf, minSize, maxSize, f) {
+  constructor(tf, f) {
     _trailsConfig.tf = tf;
     /**@type {Trail[]} */
     this.trails = [];
-    this.setSizeRange(minSize, maxSize);
     this.setAutomaticallyCreate(false);
     this.setComplexFunc(f);
     this.setNumberOfTrailsGoal(10);
-  }
-  setSizeRange(minSize, maxSize) {
-    _trailsConfig.minSize = minSize;
-    _trailsConfig.maxSize = maxSize;
   }
   setAutomaticallyCreate(b) {
     this.automaticallyCreate = b;
@@ -184,3 +177,10 @@ class Trails {
     pop();
   }
 }
+
+var traillevels = {
+  setLevelRange: (minLevel, maxLevel) => {
+    _trailsConfig.minLevel = minLevel;
+    _trailsConfig.maxLevel = maxLevel;
+  },
+};

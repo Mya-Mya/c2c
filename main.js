@@ -9,8 +9,8 @@ function setup() {
   createCanvas(600, 400);
   background(245);
   frameRate(8);
-  trails = new Trails(tf, 1, 10, function (z) {
-    return complexoperations.exp.n(z);
+  trails = new Trails(tf, function (z) {
+    return complexoperations.cos.n(z);
   });
   doms.onAutomaticallyCreateTrailsChange(function (b) {
     trails.setAutomaticallyCreate(b);
