@@ -13,7 +13,7 @@ function setup() {
     traillevels.setLevelRange(minLevel, maxLevel)
   );
   trails = new Trails(tf, function (z) {
-    return complexoperations.cos.n(z);
+    return z.clone();
   });
   doms.onAutomaticallyCreateTrailsChange(function (b) {
     trails.setAutomaticallyCreate(b);
