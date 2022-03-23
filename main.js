@@ -22,7 +22,6 @@ function setup() {
 
 function draw() {
   background(250);
-  if (mouseIsPressed) tf.shift(grabbingU, grabbingV, mouseX, mouseY);
   if (grabbing) tf.shift(grabbingU, grabbingV, mouseX, mouseY);
   drawAxis();
   trails.draw();
@@ -49,8 +48,6 @@ function mouseWheel(e) {
   tf.multA(1 - e.delta * 0.001, mouseX, mouseY);
 }
 function mousePressed() {
-  grabbingU = tf.u(mouseX);
-  grabbingV = tf.v(mouseY);
   if (0 < mouseX && mouseX < width && 0 < mouseY && mouseY < height) {
     grabbing = true;
     grabbingU = tf.u(mouseX);
