@@ -32,4 +32,26 @@ var doms = {
     levelSpaceDOM.oninput = oninput;
     oninput();
   },
+  c2csamples: {
+    /**
+     *
+     * @param {string} name
+     * @param {()=>void} onClick
+     */
+    addC2csample: function (name, onClick) {
+      var listDOM = document.getElementById("c2csamples-list");
+      var itemDOM = document.createElement("li");
+      itemDOM.innerText = name;
+      itemDOM.classList.add("list-group-item");
+      itemDOM.classList.add("list-group-item-action");
+      itemDOM.onclick = function () {
+        for (var dom of listDOM.children) {
+          dom.classList.remove("active");
+        }
+        itemDOM.classList.add("active");
+        onClick();
+      };
+      listDOM.appendChild(itemDOM);
+    },
+  },
 };
