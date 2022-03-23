@@ -100,4 +100,12 @@ class ComplexNumber {
   isPolarReady() {
     return this.r !== undefined && this.t !== undefined;
   }
+  clone() {
+    var cloned = new ComplexNumber();
+    cloned.x = this.x;
+    cloned.y = this.y;
+    cloned.r = this.r;
+    cloned.t = this.t;
+    return cloned;
+  }
 }
