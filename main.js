@@ -9,7 +9,7 @@ function setup() {
   background(245);
   frameRate(8);
   trails = new Trails(tf, 1, 10, function (z) {
-    return complexes.exp(z);
+    return complexoperations.exp.n(z);
   });
   doms.onAutomaticallyCreateTrailsChange(function (b) {
     trails.setAutomaticallyCreate(b);

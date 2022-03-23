@@ -73,8 +73,8 @@ class Particle {
    * @returns {Particle}
    */
   createNext() {
-    var direction = complexes.divByR(this.fz, this.fz.getR());
-    var z = complexes.add(this.z, direction);
+    var direction = complexoperations.divByRealByXY.n(this.fz, this.fzSize);
+    var z = complexoperations.add.n(this.z, direction);
     this.next = new Particle(z, this.f);
     return this.next;
   }
@@ -118,7 +118,7 @@ class Trails {
    * @param {number} maxSize
    * @param {ComplexFunc} f
    */
-  constructor(tf, minSize, maxSize,f) {
+  constructor(tf, minSize, maxSize, f) {
     _trailsConfig.tf = tf;
     /**@type {Trail[]} */
     this.trails = [];
@@ -135,9 +135,9 @@ class Trails {
     this.automaticallyCreate = b;
   }
   /**
-   * @param {ComplexFunc} f 
+   * @param {ComplexFunc} f
    */
-  setComplexFunc(f){
+  setComplexFunc(f) {
     this.f = f;
   }
   setNumberOfTrailsGoal(n) {
@@ -169,7 +169,7 @@ class Trails {
       }
     }
     push();
-    strokeWeight(3)
+    strokeWeight(3);
     for (var i = this.trails.length - 1; i >= 0; i--) {
       var trail = this.trails[i];
       trail.draw();
