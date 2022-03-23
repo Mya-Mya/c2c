@@ -11,14 +11,18 @@ function setup() {
   trails = new Trails(tf, 1, 10, function (z) {
     return complexes.exp(z);
   });
-  doms.onAutomaticallyCreateTrailsChange(function(b){trails.setAutomaticallyCreate(b)})
-  doms.onNumberOfTrailsGoalChange(function(n){trails.setNumberOfTrailsGoal(n)})
+  doms.onAutomaticallyCreateTrailsChange(function (b) {
+    trails.setAutomaticallyCreate(b);
+  });
+  doms.onNumberOfTrailsGoalChange(function (n) {
+    trails.setNumberOfTrailsGoal(n);
+  });
 }
 
 function draw() {
   background(250);
   if (mouseIsPressed) tf.shift(grabbingU, grabbingV, mouseX, mouseY);
-  drawAxis()
+  drawAxis();
   trails.draw();
   doms.NumberOfTrailsDOM.innerText = trails.trails.length;
 }
