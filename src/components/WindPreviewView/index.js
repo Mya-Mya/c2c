@@ -7,7 +7,14 @@ import {
 } from "../../states/trailsStates";
 import { minLevelState, maxLevelState } from "../../states/levelStates";
 import _ from "./globals";
+import { setupTrails, drawTrails, addTrail } from "./trails";
+
+import ParticleStyle1 from "../../models/particlestyle/ParticleStyle1";
 import { P5Instance, ReactP5Wrapper } from "react-p5-wrapper";
+import Transformer from "../../models/Transformer";
+import drawAxis from "./drawAxis";
+import coperation from "../../models/complex/coperation";
+
 /**
  * @typedef {object} WindPreviewViewProps
  * @property {boolean} automaticallyCreateTrails
@@ -16,6 +23,7 @@ import { P5Instance, ReactP5Wrapper } from "react-p5-wrapper";
  * @property {number} maxLevel
  * @property {(n:number)=>void} onNumTrailsChange
  */
+
 /**
  *
  * @param {P5Instance} p
@@ -25,6 +33,9 @@ const sketch = (p) => {
   _.transformer = new Transformer(0, 0, 300, 200, 10);
   _.particleStyle = new ParticleStyle1();
   _.func = (z) => coperation.exp.n(z);
+  let grabbing = false;
+  let grabbingU = 0;
+  let grabbingV = 0;
   p.setup = () => {
     p.createCanvas(600, 400);
     p.frameRate(10);
@@ -43,6 +54,12 @@ const sketch = (p) => {
     _.rightU = _.transformer.u(p.width);
     _.topV = _.transformer.v(0);
     _.bottomV = _.transformer.v(p.height);
+    if (grabbing) _.transformer.shift(grabbingU, grabbingV, p.mouseX, p.mouseY);
+  p.mouseReleased = () => {
+    grabbing = false;
+  };
+  p.keyPressed = () => {
+    addTrail(_.transformer.u(p.mouseX), _.transformer.v(p.mouseY));
   };
 };
 
