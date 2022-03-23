@@ -103,6 +103,9 @@ export const addTrail = (u, v) => {
   /**@type {Trail}*/ const trail = new Trail(ComplexNumber.fromXY(u, v));
   trails.push(trail);
 };
+export const removeAllTrials = () => {
+  trails = [];
+};
 export const drawTrails = () => {
   _.p.push();
   trails.forEach((trail) => trail.draw());

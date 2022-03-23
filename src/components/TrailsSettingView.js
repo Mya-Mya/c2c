@@ -1,5 +1,6 @@
 import React from "react";
 import {
+  Button,
   Card,
   Checkbox,
   Container,
@@ -17,6 +18,7 @@ import {
   numTrailsGoalState,
   numTrailsNowState,
 } from "../states/trailsStates";
+import { removeAllTrials } from "./WindPreviewView/trails";
 export default () => {
   const [automaticallyCreate, setAutomaticallyCreate] = useRecoilState(
     automaticallyCreateState
@@ -54,6 +56,9 @@ export default () => {
         <Typography variant="body1" sx={{ textAlign: "right" }}>
           {numTrailsNow} / {numTrailsGoal}
         </Typography>
+        <Button variant="outlined" onClick={removeAllTrials}>
+          Remove All
+        </Button>
       </Stack>
     </Paper>
   );
