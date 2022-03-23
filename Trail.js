@@ -26,6 +26,7 @@ class Particle {
   constructor(z, f) {
     this.z = z;
     this.f = f;
+    this.age = 0;
     this.fz = f(z);
     this.fzSize = this.fz.getR();
     this.next = undefined;
@@ -36,11 +37,7 @@ class Particle {
     this.y = _trailsConfig.tf.y(this.z.getY());
   }
 
-  /**
-   *
-   * @param {number} n frames since this particle was created
-   */
-  draw(n) {
+  draw() {
     this.updateXY();
     var level = map(
       log(this.fzSize),
@@ -53,13 +50,14 @@ class Particle {
     var r = 127 - 127 * level;
     var g = 60 + 160 * level;
     var b = 255;
-    var a = map(n, 0, 10, 0, 255);
+    var a = map(this.age, 0, 10, 255, 0);
     stroke(r, g, b, a);
     if (this.next) {
       line(this.x, this.y, this.next.x, this.next.y);
     } else {
       point(this.x, this.y);
     }
+    this.age++;
   }
   isInScreen() {
     var u = this.z.getX();
@@ -118,16 +116,32 @@ class Trails {
    * @param {Transformer} tf
    * @param {number} minSize
    * @param {number} maxSize
+   * @param {ComplexFunc} f
    */
-  constructor(tf, minSize, maxSize) {
+  constructor(tf, minSize, maxSize,f) {
     _trailsConfig.tf = tf;
     /**@type {Trail[]} */
     this.trails = [];
     this.setSizeRange(minSize, maxSize);
+    this.setAutomaticallyCreate(false);
+    this.setComplexFunc(f);
+    this.setNumberOfTrailsGoal(10);
   }
   setSizeRange(minSize, maxSize) {
     _trailsConfig.minSize = minSize;
     _trailsConfig.maxSize = maxSize;
+  }
+  setAutomaticallyCreate(b) {
+    this.automaticallyCreate = b;
+  }
+  /**
+   * @param {ComplexFunc} f 
+   */
+  setComplexFunc(f){
+    this.f = f;
+  }
+  setNumberOfTrailsGoal(n) {
+    this.numberOfTrailsGoal = n;
   }
   /**
    *
@@ -136,19 +150,26 @@ class Trails {
   addTrail(trail) {
     this.trails.push(trail);
   }
-  createTrail(u, v, f) {
+  createTrail(u, v) {
     var z = ComplexNumber.fromXY(u, v);
-    var trail = new Trail(z, f);
+    var trail = new Trail(z, this.f);
     this.addTrail(trail);
   }
   draw() {
-    print("Trails.draw", "trials:", this.trails.length);
     _trailsConfig.leftU = _trailsConfig.tf.u(0);
     _trailsConfig.rightU = _trailsConfig.tf.u(width);
     _trailsConfig.topV = _trailsConfig.tf.v(0);
     _trailsConfig.bottomV = _trailsConfig.tf.v(height);
+    if (this.automaticallyCreate) {
+      var numToCreate = this.numberOfTrailsGoal - this.trails.length;
+      for (var i = 0; i < numToCreate; i++) {
+        var u = random(_trailsConfig.leftU, _trailsConfig.rightU);
+        var v = random(_trailsConfig.bottomV, _trailsConfig.topV);
+        this.createTrail(u, v);
+      }
+    }
     push();
-    noStroke();
+    strokeWeight(3)
     for (var i = this.trails.length - 1; i >= 0; i--) {
       var trail = this.trails[i];
       trail.draw();

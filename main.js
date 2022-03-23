@@ -8,22 +8,27 @@ function setup() {
   createCanvas(600, 400);
   background(245);
   frameRate(8);
-  trails = new Trails(tf, 1, 10);
+  trails = new Trails(tf, 1, 10, function (z) {
+    return complexes.exp(z);
+  });
+  doms.onAutomaticallyCreateTrailsChange(function(b){trails.setAutomaticallyCreate(b)})
+  doms.onNumberOfTrailsGoalChange(function(n){trails.setNumberOfTrailsGoal(n)})
 }
 
 function draw() {
-  background(255, 255, 255);
+  background(250);
   if (mouseIsPressed) tf.shift(grabbingU, grabbingV, mouseX, mouseY);
-  drawAxis();
+  drawAxis()
   trails.draw();
+  doms.NumberOfTrailsDOM.innerText = trails.trails.length;
 }
 function drawAxis() {
   var leftU = tf.u(0);
   var rightU = tf.u(width);
   var topV = tf.v(0);
   var bottomV = tf.v(height);
-  var deltaU = (rightU - leftU) / 10;
-  var deltaV = (topV - bottomV) / 10;
+  var deltaU = (rightU - leftU) * 0.1;
+  var deltaV = (topV - bottomV) * 0.1;
   line(tf.x(0), tf.y(bottomV), tf.x(0), tf.y(topV));
   line(tf.x(leftU), tf.y(0), tf.x(rightU), tf.y(0));
   for (var u = 0; u <= rightU; u += deltaU) text(nfc(u, 1), tf.x(u), tf.y(0));
@@ -44,7 +49,5 @@ function mousePressed() {
 function keyPressed() {
   var u = tf.u(mouseX);
   var v = tf.v(mouseY);
-  trails.createTrail(u, v, function (z) {
-    return complexes.exp(z);
-  });
+  trails.createTrail(u, v);
 }

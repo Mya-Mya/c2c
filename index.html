@@ -12,6 +12,7 @@
     <title>c2c</title>
     <script src="modules/p5.min.js"></script>
     <script src="modules/scenemanager.js"></script>
+    <script defer src="doms.js"></script>
     <script src="ComplexNumber.js"></script>
     <script src="Transformer.js"></script>
     <script src="complexes.js"></script>
@@ -19,7 +20,22 @@
     <script src="main.js"></script>
   </head>
   <body class="d-flex flex-column align-items-center gap-1 pt-1">
-    <h3 class="display-5">Complex to Complex function Visualizer</h3>
     <main></main>
+    <div class="d-flex flex-row justify-content-between gap-1">
+      <div class="card card-body">
+        <h5>Trails</h5>
+        <p class="text-muted" id="number-of-trails">#</p>
+        <div class="form-check form-switch">
+          <input class="form-check-input" type="checkbox" value="" id="automatically-create-trails">
+          <label class="form-check-label" for="automatically-create-trails">
+            Automatically Create Trails
+          </label>
+        </div>
+        <div>
+            <label for="number-of-trails-goal" class="form-label">Number of Trails</label>
+            <input type="number" class="form-control" id="number-of-trails-goal" min="1" max="200">
+        </div>
+      </div>
+    </div>
   </body>
 </html>
