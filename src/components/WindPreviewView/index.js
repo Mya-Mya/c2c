@@ -25,6 +25,11 @@ const sketch = (p) => {
   _.transformer = new Transformer(0, 0, 300, 200, 10);
   _.particleStyle = new ParticleStyle1();
   _.func = (z) => coperation.exp.n(z);
+  p.setup = () => {
+    p.createCanvas(600, 400);
+    p.frameRate(10);
+    setupTrails();
+  };
   /**
    *
    * @param {WindPreviewViewProps} props
