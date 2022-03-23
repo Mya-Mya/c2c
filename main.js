@@ -9,6 +9,9 @@ function setup() {
   createCanvas(600, 400);
   background(245);
   frameRate(8);
+  doms.onLevelsChange((minLevel, maxLevel) =>
+    traillevels.setLevelRange(minLevel, maxLevel)
+  );
   trails = new Trails(tf, function (z) {
     return complexoperations.cos.n(z);
   });
