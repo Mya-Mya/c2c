@@ -12,7 +12,8 @@ function setup() {
   doms.onLevelsChange((minLevel, maxLevel) =>
     traillevels.setLevelRange(minLevel, maxLevel)
   );
-  trails = new Trails(tf, function (z) {
+  trails = new Trails(tf);
+  trailfunctions.setComplexFunc(function (z) {
     return z.clone();
   });
   doms.onAutomaticallyCreateTrailsChange(function (b) {

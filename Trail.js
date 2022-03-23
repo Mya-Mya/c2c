@@ -1,3 +1,7 @@
+/**
+ * @typedef {(ComplexNumber)=>ComplexNumber} ComplexFunc
+ */
+
 var _trailsConfig = {
   /**@type {Transformer} */
   tf: null,
@@ -15,21 +19,15 @@ var _trailsConfig = {
   bottomV: 0,
   /**@type {ParticleStyle} */
   particleStyle: new ParticleStyle1(),
+  /**@type {ComplexFunc} */
+  complexFunc: null,
 };
-/**
- * @typedef {(ComplexNumber)=>ComplexNumber} ComplexFunc
- */
 
 class Particle {
-  /**
-   * @param {ComplexNumber} z
-   * @param {ComplexFunc} f
-   */
-  constructor(z, f) {
-    this.z = z;
-    this.f = f;
+  constructor(z) {
     this.age = 0;
-    this.fz = f(z);
+    this.z = z;
+    this.fz = _trailsConfig.complexFunc(z);
     this.fzSize = this.fz.getR();
     this.level = Math.log10(this.fzSize);
     this.next = undefined;
@@ -79,7 +77,7 @@ class Particle {
   createNext() {
     var direction = complexoperations.divByRealByXY.n(this.fz, this.fzSize);
     var z = complexoperations.add.n(this.z, direction);
-    this.next = new Particle(z, this.f);
+    this.next = new Particle(z);
     return this.next;
   }
 }
@@ -124,24 +122,16 @@ class Trails {
   /**
    *
    * @param {Transformer} tf
-   * @param {ComplexFunc} f
    */
-  constructor(tf, f) {
+  constructor(tf) {
     _trailsConfig.tf = tf;
     /**@type {Trail[]} */
     this.trails = [];
     this.setAutomaticallyCreate(false);
-    this.setComplexFunc(f);
     this.setNumberOfTrailsGoal(10);
   }
   setAutomaticallyCreate(b) {
     this.automaticallyCreate = b;
-  }
-  /**
-   * @param {ComplexFunc} f
-   */
-  setComplexFunc(f) {
-    this.f = f;
   }
   setNumberOfTrailsGoal(n) {
     this.numberOfTrailsGoal = n;
@@ -155,7 +145,7 @@ class Trails {
   }
   createTrail(u, v) {
     var z = ComplexNumber.fromXY(u, v);
-    var trail = new Trail(z, this.f);
+    var trail = new Trail(z);
     this.addTrail(trail);
   }
   draw() {
@@ -186,5 +176,10 @@ var traillevels = {
   setLevelRange: (minLevel, maxLevel) => {
     _trailsConfig.minLevel = minLevel;
     _trailsConfig.maxLevel = maxLevel;
+  },
+};
+var trailfunctions = {
+  setComplexFunc: (f) => {
+    _trailsConfig.complexFunc = f;
   },
 };
