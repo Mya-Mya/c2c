@@ -1,0 +1,52 @@
+{
+  "name": "c2c",
+  "version": "1.0.0",
+  "description": "Complex to Complex function Visualizer",
+  "main": "src/App.js",
+  "dependencies": {
+    "@emotion/react": "^11.8.2",
+    "@emotion/styled": "^11.8.1",
+    "@mui/material": "^5.5.2",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "react-p5-wrapper": "^3.2.1",
+    "recoil": "^0.6.1"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.17.8",
+    "@babel/preset-env": "^7.16.11",
+    "@babel/preset-react": "^7.16.7",
+    "babel-loader": "^8.2.4",
+    "html-webpack-plugin": "^5.5.0",
+    "webpack": "^5.70.0",
+    "webpack-cli": "^4.9.2",
+    "webpack-dev-server": "^4.7.4"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "npx webpack serve --config webpack.config.js",
+    "build": "npx webpack --config webpack.config.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Mya-Mya/c2c.git"
+  },
+  "author": "Mya-Mya",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Mya-Mya/c2c/issues"
+  },
+  "homepage": "https://github.com/Mya-Mya/c2c#readme",
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
+}

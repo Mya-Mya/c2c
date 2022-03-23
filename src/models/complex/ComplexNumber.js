@@ -1,4 +1,4 @@
-class ComplexNumber {
+export default class ComplexNumber {
   constructor() {
     this.x = undefined;
     this.y = undefined;
@@ -62,7 +62,7 @@ class ComplexNumber {
     this._clearXY();
   }
   _prepareRFromXY() {
-    this.r = sqrt(this.x * this.x + this.y * this.y);
+    this.r = Math.sqrt(this.x * this.x + this.y * this.y);
   }
   //T
   getT() {

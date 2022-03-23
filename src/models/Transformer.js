@@ -1,4 +1,4 @@
-class Transformer {
+export default class {
   constructor(u, v, x, y, a) {
     this.setAOnly(a);
     this.shift(u, v, x, y);
@@ -16,9 +16,6 @@ class Transformer {
     var one_minus_ratio = 1 - ratio;
     this.e = this.e * ratio + x * one_minus_ratio;
     this.f = this.f * ratio + y * one_minus_ratio;
-  }
-  transform() {
-    applyMatrix(this.a, 0, 0, -this.a, this.e, this.f);
   }
   x(u) {
     return this.a * u + this.e;
