@@ -55,6 +55,7 @@ const sketch = (p) => {
     _.topV = _.transformer.v(0);
     _.bottomV = _.transformer.v(p.height);
     if (grabbing) _.transformer.shift(grabbingU, grabbingV, p.mouseX, p.mouseY);
+    drawAxis();
   p.mouseReleased = () => {
     grabbing = false;
   };
