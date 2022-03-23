@@ -97,11 +97,17 @@ class Trail {
     this.particles.push(newParticle);
 
     if (this.particles.length > this.maxLength) this.particles.shift();
-
+    for (var particle of this.particles) {
+      particle.draw();
+    }
+    if (frameCount % 2 === 0) {
+      this._updateIsNeeded();
+    }
+  }
+  _updateIsNeeded() {
     this.isNeeded = false;
-    for (var i = 0; i < this.particles.length; i++) {
-      var particle = this.particles[i];
-      particle.draw(i);
+    for (var particle of this.particles) {
+      particle.draw();
       if (particle.isInScreen()) this.isNeeded = true;
     }
   }
