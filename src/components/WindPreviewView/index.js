@@ -58,6 +58,9 @@ const sketch = (p) => {
   p.mouseReleased = () => {
     grabbing = false;
   };
+  p.mouseWheel = (event) => {
+    _.transformer.multA(1 - event.delta / 1000, p.mouseX, p.mouseY);
+  };
   p.keyPressed = () => {
     addTrail(_.transformer.u(p.mouseX), _.transformer.v(p.mouseY));
   };
