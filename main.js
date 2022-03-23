@@ -4,6 +4,7 @@ var trails;
 
 var grabbingU;
 var grabbingV;
+var grabbing = false;
 function setup() {
   createCanvas(600, 400);
   background(245);
@@ -22,6 +23,7 @@ function setup() {
 function draw() {
   background(250);
   if (mouseIsPressed) tf.shift(grabbingU, grabbingV, mouseX, mouseY);
+  if (grabbing) tf.shift(grabbingU, grabbingV, mouseX, mouseY);
   drawAxis();
   trails.draw();
   doms.NumberOfTrailsDOM.innerText = trails.trails.length;
@@ -49,6 +51,14 @@ function mouseWheel(e) {
 function mousePressed() {
   grabbingU = tf.u(mouseX);
   grabbingV = tf.v(mouseY);
+  if (0 < mouseX && mouseX < width && 0 < mouseY && mouseY < height) {
+    grabbing = true;
+    grabbingU = tf.u(mouseX);
+    grabbingV = tf.v(mouseY);
+  }
+}
+function mouseReleased() {
+  grabbing = false;
 }
 function keyPressed() {
   var u = tf.u(mouseX);
