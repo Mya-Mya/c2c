@@ -1,3 +1,57 @@
+class SingleParamComplexOperation {
+  /**
+   *
+   * @param {(ComplexNumber)=>void} operator a function that calculates something and calls set functions on the given ComplexNumber
+   */
+  constructor(operator) {
+    this.operator = operator;
+  }
+  /**
+   * Perform a destructive operation on the given ComplexNumber
+   * @param {ComplexNumber} z
+   * @returns {ComplexNumber}
+   */
+  d(z) {
+    this.operator(z);
+    return z;
+  }
+  /**
+   * Perform a non-destructive operation on the given ComplexNumber
+   * @param {ComplexNumber} z
+   * @returns {ComplexNumber}
+   */
+  n(z) {
+    return this.d(z.clone());
+  }
+}
+class DoubleParamComplexOperation {
+  /**
+   *
+   * @param {(ComplexNumber,ComplexNumber|number)=>void} operator a function that calculates something and calls set functions on the first given ComplexNumber
+   */
+  constructor(operator) {
+    this.operator = operator;
+  }
+  /**
+   * Perform a destructive operation on the given ComplexNumber
+   * @param {ComplexNumber} z
+   * @param {ComplexNumber|number} w
+   * @returns {ComplexNumber}
+   */
+  d(z, w) {
+    this.operator(z, w);
+    return z;
+  }
+  /**
+   * Perform a non-destructive operation on the given ComplexNumber
+   * @param {ComplexNumber} z
+   * @param {ComplexNumber|number} w
+   * @returns {ComplexNumber}
+   */
+  n(z, w) {
+    return this.d(z.clone(), w);
+  }
+}
 var complexes = {
   /**
    * @param {ComplexNumber} z1
