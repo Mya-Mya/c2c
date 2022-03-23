@@ -18,8 +18,7 @@ var c2csamples = {
 Object.entries(c2csamples).forEach(function (entry) {
   var name = entry[0];
   var f = entry[1];
-  alert(name);
   doms.c2csamples.addC2csample(name, function () {
-    trails.setComplexFunc(f);
+    trailfunctions.setComplexFunc(f);
   });
 });
