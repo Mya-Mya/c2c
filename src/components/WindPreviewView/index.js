@@ -37,7 +37,7 @@ const sketch = (p) => {
   let grabbingU = 0;
   let grabbingV = 0;
   p.setup = () => {
-    p.createCanvas(600, 400);
+    p.createCanvas(800, 400);
     p.frameRate(10);
     setupTrails();
   };
