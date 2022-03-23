@@ -1,0 +1,90 @@
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+      crossorigin="anonymous"
+    />
+    <title>c2c</title>
+    <script src="modules/p5.min.js"></script>
+    <script src="modules/scenemanager.js"></script>
+    <script defer src="doms.js"></script>
+    <script src="ComplexNumber.js"></script>
+    <script src="ParticleStyles.js"></script>
+    <script src="Transformer.js"></script>
+    <script src="ComplexOperations.js"></script>
+    <script src="Trail.js"></script>
+    <script src="main.js"></script>
+    <script defer src="c2csamples.js"></script>
+  </head>
+  <body class="d-flex flex-column align-items-center gap-1 pt-1">
+    <main></main>
+    <div class="d-flex flex-row justify-content-between gap-1">
+      <div class="card">
+        <div class="card-header">Trails</div>
+        <div class="card-body">
+          <p class="text-muted" id="number-of-trails">#</p>
+          <div class="form-check form-switch">
+            <input
+              class="form-check-input"
+              type="checkbox"
+              value=""
+              id="automatically-create-trails"
+            />
+            <label class="form-check-label" for="automatically-create-trails">
+              Automatically Create Trails
+            </label>
+          </div>
+          <div class="form-text">
+            <label for="number-of-trails-goal" class="form-label"
+              >Number of Trails</label
+            >
+            <input
+              type="number"
+              class="form-control"
+              id="number-of-trails-goal"
+              min="1"
+              max="200"
+            />
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-header">Levels</div>
+        <div class="card-body">
+          <p class="text-muted" id="level-range">#</p>
+          <label for="min-level">Min</label>
+          <input
+            type="range"
+            class="form-range"
+            min="-10"
+            max="10"
+            step="0.01"
+            value="-3"
+            id="min-level"
+          />
+          <label for="level-space">Space</label>
+          <input
+            type="range"
+            class="form-range"
+            min="0"
+            max="20"
+            step="0.01"
+            value="6"
+            id="level-space"
+          />
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-header">C2C Samples</div>
+        <div class="card-body">
+          <li class="list-group" id="c2csamples-list"></li>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
