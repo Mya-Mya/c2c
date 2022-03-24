@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import _ from "./globals";
 import { setupTrails, drawTrails, addTrail } from "./trails";
 
@@ -6,18 +6,14 @@ import ParticleStyle1 from "../../models/particlestyle/ParticleStyle1";
 import { P5Instance, ReactP5Wrapper } from "react-p5-wrapper";
 import Transformer from "../../models/Transformer";
 import drawAxis from "./drawAxis";
-import Complex from "complex.js";
-import { useDispatch, useStore } from "react-redux";
+import { Complex } from "complex.js";
+import { useDispatch } from "react-redux";
 
-/**
- *
- * @param {P5Instance} p
- */
-const sketch = (p) => {
+const sketch = (p: P5Instance) => {
   _.p = p;
   _.transformer = new Transformer(0, 0, 300, 200, 10);
   _.particleStyle = new ParticleStyle1();
-  _.func = (/**@type {Complex.Complex}*/ z) => {
+  _.func = (z: Complex) => {
     return z.sin();
   };
   let grabbing = false;
@@ -60,7 +56,7 @@ const sketch = (p) => {
   p.mouseReleased = () => {
     grabbing = false;
   };
-  p.mouseWheel = (event) => {
+  p.mouseWheel = (event: { delta: number }) => {
     if (isMouseInScreen()) {
       _.transformer.multA(1 - event.delta / 1000, p.mouseX, p.mouseY);
     }
