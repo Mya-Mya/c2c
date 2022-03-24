@@ -1,6 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import { Container, Grid, Stack } from "@mui/material";
+import { Container, Stack } from "@mui/material";
 import WindPreviewView from "./components/WindPreviewView";
 import SettingsView from "./components/SettingsView";
 import { store } from "./states";

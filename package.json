@@ -2,7 +2,7 @@
   "name": "c2c",
   "version": "1.0.0",
   "description": "Complex to Complex function Visualizer",
-  "main": "src/App.js",
+  "main": "src/App.tsx",
   "dependencies": {
     "@emotion/react": "^11.8.2",
     "@emotion/styled": "^11.8.1",
