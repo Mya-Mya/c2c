@@ -42,13 +42,16 @@ const sketch = (p) => {
     drawAxis();
     drawTrails();
   };
+  const isMouseInScreen = () => {
+    return (
+      p.mouseX >= 0 &&
+      p.mouseX < p.width &&
+      p.mouseY >= 0 &&
+      p.mouseY < p.height
+    );
+  };
   p.mousePressed = () => {
-    if (
-      0 <= p.mouseX &&
-      p.mouseX <= p.width &&
-      0 <= p.mouseY &&
-      p.mouseY <= p.height
-    ) {
+    if (isMouseInScreen()) {
       grabbing = true;
       grabbingU = _.transformer.u(p.mouseX);
       grabbingV = _.transformer.v(p.mouseY);
@@ -58,7 +61,9 @@ const sketch = (p) => {
     grabbing = false;
   };
   p.mouseWheel = (event) => {
-    _.transformer.multA(1 - event.delta / 1000, p.mouseX, p.mouseY);
+    if (isMouseInScreen()) {
+      _.transformer.multA(1 - event.delta / 1000, p.mouseX, p.mouseY);
+    }
   };
   p.keyPressed = () => {
     addTrail(_.transformer.u(p.mouseX), _.transformer.v(p.mouseY));
