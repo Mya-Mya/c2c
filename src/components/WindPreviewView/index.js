@@ -1,11 +1,4 @@
-import React from "react";
-import { useRecoilValue, useSetRecoilState } from "recoil";
-import {
-  automaticallyCreateState,
-  numTrailsGoalState,
-  numTrailsNowState,
-} from "../../states/trailsStates";
-import { minLevelState, maxLevelState } from "../../states/levelStates";
+import React, { useEffect } from "react";
 import _ from "./globals";
 import { setupTrails, drawTrails, addTrail } from "./trails";
 
@@ -14,15 +7,7 @@ import { P5Instance, ReactP5Wrapper } from "react-p5-wrapper";
 import Transformer from "../../models/Transformer";
 import drawAxis from "./drawAxis";
 import Complex from "complex.js";
-
-/**
- * @typedef {object} WindPreviewViewProps
- * @property {boolean} automaticallyCreateTrails
- * @property {number} numTrailsGoal
- * @property {number} minLevel
- * @property {number} maxLevel
- * @property {(n:number)=>void} onNumTrailsChange
- */
+import { useDispatch, useStore } from "react-redux";
 
 /**
  *
@@ -43,12 +28,8 @@ const sketch = (p) => {
     p.frameRate(10);
     setupTrails();
   };
-  /**
-   *
-   * @param {WindPreviewViewProps} props
-   */
   p.updateWithProps = (props) => {
-    _.props = props;
+    _.dispatch = props.dispatch;
   };
   p.draw = () => {
     //Update globals
@@ -61,13 +42,16 @@ const sketch = (p) => {
     drawAxis();
     drawTrails();
   };
+  const isMouseInScreen = () => {
+    return (
+      p.mouseX >= 0 &&
+      p.mouseX < p.width &&
+      p.mouseY >= 0 &&
+      p.mouseY < p.height
+    );
+  };
   p.mousePressed = () => {
-    if (
-      0 <= p.mouseX &&
-      p.mouseX <= p.width &&
-      0 <= p.mouseY &&
-      p.mouseY <= p.height
-    ) {
+    if (isMouseInScreen()) {
       grabbing = true;
       grabbingU = _.transformer.u(p.mouseX);
       grabbingV = _.transformer.v(p.mouseY);
@@ -77,7 +61,9 @@ const sketch = (p) => {
     grabbing = false;
   };
   p.mouseWheel = (event) => {
-    _.transformer.multA(1 - event.delta / 1000, p.mouseX, p.mouseY);
+    if (isMouseInScreen()) {
+      _.transformer.multA(1 - event.delta / 1000, p.mouseX, p.mouseY);
+    }
   };
   p.keyPressed = () => {
     addTrail(_.transformer.u(p.mouseX), _.transformer.v(p.mouseY));
@@ -85,13 +71,5 @@ const sketch = (p) => {
 };
 
 export default () => {
-  /**@type {WindPreviewViewProps} */
-  const p = {
-    automaticallyCreateTrails: useRecoilValue(automaticallyCreateState),
-    onNumTrailsChange: useSetRecoilState(numTrailsNowState),
-    minLevel: useRecoilValue(minLevelState),
-    maxLevel: useRecoilValue(maxLevelState),
-    numTrailsGoal: useRecoilValue(numTrailsGoalState),
-  };
-  return <ReactP5Wrapper sketch={sketch} {...p} />;
+  return <ReactP5Wrapper sketch={sketch} dispatch={useDispatch()} />;
 };

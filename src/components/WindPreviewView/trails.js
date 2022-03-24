@@ -1,5 +1,9 @@
 import Complex from "complex.js";
 import _ from "./globals";
+import { store } from "../../states";
+import { selectSelectingC2cSample } from "../../states/c2csampleSlice";
+import { selectTrailsState, setNumTrailsNow } from "../../states/trailsSlice";
+import { selectLevelState } from "../../states/levelSlice";
 
 class Particle {
   /**
@@ -9,7 +13,8 @@ class Particle {
   constructor(z) {
     this.age = 0;
     this.z = z;
-    this.fz = _.func(z);
+    const f = selectSelectingC2cSample(store.getState()).func;
+    this.fz = f(z);
     this.fzSize = this.fz.abs();
     this.level = Math.log10(this.fzSize);
     this.next = undefined;
@@ -22,10 +27,12 @@ class Particle {
 
   draw() {
     this.updateXY();
+    const minLevel = selectLevelState(store.getState()).min;
+    const maxLevel = selectLevelState(store.getState()).max;
     _.particleStyle.set(
-      _.props.minLevel,
+      /*_.props.*/ minLevel,
       this.level,
-      _.props.maxLevel,
+      /*_.props.*/ maxLevel,
       this.age
     );
     _.p.stroke(
@@ -110,9 +117,13 @@ export const drawTrails = () => {
   trails.forEach((trail) => trail.draw());
   _.p.pop();
   trails = trails.filter((trail) => trail.getIsNeeded());
-  _.props.onNumTrailsChange(trails.length);
-  if (_.props.automaticallyCreateTrails) {
-    for (let i = 0; i < _.props.numTrailsGoal - trails.length; i++) {
+  store.dispatch(setNumTrailsNow(trails.length));
+  const automaticallyCreateTrails = selectTrailsState(
+    store.getState()
+  ).automaticallyCreate;
+  if (automaticallyCreateTrails) {
+    const numTrailsGoal = selectTrailsState(store.getState()).numTrailsGoal;
+    for (let i = 0; i < numTrailsGoal - trails.length; i++) {
       addRandomTrail();
     }
   }
