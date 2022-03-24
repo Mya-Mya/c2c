@@ -39,22 +39,19 @@ export default () => {
     dispatch(setMax(newMaxLevel));
   };
   return (
-    <Paper>
-      <Stack p={2} spacing={1}>
-        <Typography variant="h4">Level Range</Typography>
-        <Slider
-          value={[minLevel, maxLevel]}
-          onChange={handleChange}
-          valueLabelDisplay="auto"
-          disableSwap
-          min={-10}
-          max={10}
-          step={0.01}
-        />
-        <Typography variant="body1" sx={{ textAlign: "right" }}>
-          {minLevel} ~ {maxLevel}
-        </Typography>
-      </Stack>
-    </Paper>
+    <Stack p={2} spacing={1}>
+      <Slider
+        value={[minLevel, maxLevel]}
+        onChange={handleChange}
+        valueLabelDisplay="auto"
+        disableSwap
+        min={-10}
+        max={10}
+        step={0.01}
+      />
+      <Typography variant="body1" sx={{ textAlign: "right" }}>
+        {minLevel} ~ {maxLevel}
+      </Typography>
+    </Stack>
   );
 };
