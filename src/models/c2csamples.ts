@@ -77,4 +77,4 @@ for (let i = 0; i < samples.length; i++) {
   c2csamples[i] = samples[i];
 }
 export default c2csamples;
-export const ids = Object.keys(c2csamples).map(parseInt);
+export const ids = Object.keys(c2csamples).map((key) => parseInt(key));
