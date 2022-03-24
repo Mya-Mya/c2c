@@ -1,16 +1,20 @@
-import Complex from "complex.js";
+import { Complex } from "complex.js";
 import _ from "./globals";
 import { store } from "../../states";
 import { selectSelectingC2cSample } from "../../states/c2csampleSlice";
 import { selectTrailsState, setNumTrailsNow } from "../../states/trailsSlice";
 import { selectLevelState } from "../../states/levelSlice";
-
+import createComplex from "./createComplex";
 class Particle {
-  /**
-   *
-   * @param {Complex.Complex} z
-   */
-  constructor(z) {
+  private age: number;
+  private z: Complex;
+  private x: number;
+  private y: number;
+  private fz: Complex;
+  private fzSize: number;
+  private level: number;
+  private next: Particle;
+  constructor(z: Complex) {
     this.age = 0;
     this.z = z;
     const f = selectSelectingC2cSample(store.getState()).func;
@@ -65,12 +69,11 @@ class Particle {
   }
 }
 class Trail {
-  /**
-   * @param {Complex} z
-   */
-  constructor(z) {
+  private particles: Particle[];
+  private maxLength: number;
+  private isNeeded: boolean;
+  constructor(z: Complex) {
     var particle = new Particle(z);
-    /**@type {Particle[]} */
     this.particles = [particle];
     this.maxLength = 10;
     this.isNeeded = true;
@@ -97,16 +100,15 @@ class Trail {
   }
 }
 
-/**@type {Trail[]} */
-let trails = [];
+let trails: Trail[] = [];
 export const setupTrails = () => {};
 export const addRandomTrail = () => {
   var u = _.p.random(_.leftU, _.rightU);
   var v = _.p.random(_.bottomV, _.topV);
   addTrail(u, v);
 };
-export const addTrail = (u, v) => {
-  /**@type {Trail}*/ const trail = new Trail(Complex({ re: u, im: v }));
+export const addTrail = (u: number, v: number) => {
+  const trail = new Trail(createComplex(u, v));
   trails.push(trail);
 };
 export const removeAllTrials = () => {

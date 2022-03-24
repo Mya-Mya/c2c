@@ -1,13 +1,14 @@
 import ParticleStyle from "./ParticleStyle";
-/**
- * @extends {ParticleStyle}
- */
-export default class {
+export default class extends ParticleStyle {
+  private normalized: number;
+  private cachedA: number;
+  private cachedWeight: number;
   constructor() {
+    super();
     this.normalized = 0;
     this.cachedWeight = 0;
   }
-  set(minLevel, level, maxLevel, age) {
+  set(minLevel: number, level: number, maxLevel: number, age: number) {
     if (level < minLevel) {
       this.normalized = 0;
     } else if (level > maxLevel) {

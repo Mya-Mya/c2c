@@ -1,26 +1,15 @@
 import React from "react";
-import {
-  Card,
-  Checkbox,
-  Container,
-  FormControlLabel,
-  FormGroup,
-  Paper,
-  Slider,
-  Stack,
-  Switch,
-  Typography,
-} from "@mui/material";
+import { Slider, Stack, Typography } from "@mui/material";
 import { selectLevelState, setMax, setMin } from "../states/levelSlice";
 import { useDispatch, useSelector } from "react-redux";
 export default () => {
   const dispatch = useDispatch();
-  const maxLevel = useSelector((s) => selectLevelState(s).max);
-  const minLevel = useSelector((s) => selectLevelState(s).min);
+  const maxLevel = useSelector(selectLevelState).max;
+  const minLevel = useSelector(selectLevelState).min;
   const minLevelSpace = 1;
-  const handleChange = (e, newValue, activeThumb) => {
+  const handleChange = (_: any, newValue: number[], activeThumb: number) => {
     if (!Array.isArray(newValue)) return;
-    let newMinLevel, newMaxLevel;
+    let newMinLevel: number, newMaxLevel: number;
     if (newValue[1] - newValue[0] < minLevelSpace) {
       if (activeThumb === 0) {
         const clamped = Math.min(newValue[0], 10 - minLevelSpace);

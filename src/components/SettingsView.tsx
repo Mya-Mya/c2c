@@ -30,7 +30,7 @@ export default () => {
     <Container>
       <Tabs
         value={openingSettingViewName}
-        onChange={(e, v) => dispatch(setSettingViewName(v))}
+        onChange={(_, v) => dispatch(setSettingViewName(v))}
       >
         <Tab label="C2C Sample" value={SETTING_VIEW_NAMES.C2C_SAMPLE_SELECT} />
         <Tab label="Trails Setting" value={SETTING_VIEW_NAMES.TRAILS_SETTING} />

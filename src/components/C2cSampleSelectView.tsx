@@ -1,22 +1,17 @@
 import React from "react";
-import reactDom from "react-dom";
-import {
-  Paper,
-  Stack,
-  Typography,
-  List,
-  ListItem,
-  ListItemText,
-  ListItemButton,
-} from "@mui/material";
-import c2csamples, { ids, C2CSample } from "../models/c2csamples";
+import { Stack, List, ListItem, ListItemButton } from "@mui/material";
+import c2csamples, { ids } from "../models/c2csamples";
 import { useSelector, useDispatch } from "react-redux";
 import { setSelectingId, selectC2csampleState } from "../states/c2csampleSlice";
 import ReactMarkdown from "react-markdown";
 import remarkMath from "remark-math";
 import rehypeKatex from "rehype-katex";
 import "katex/dist/katex.min.css";
-const C2cSampleItem = (id, selected, onClick) => {
+const C2cSampleItem = (
+  id: number,
+  selected: boolean,
+  onClick: (id: number) => void
+) => {
   const c2csample = c2csamples[id];
   const formulaMarkdown = "$" + c2csample.formula + "$";
   return (
@@ -38,8 +33,8 @@ const C2cSampleItem = (id, selected, onClick) => {
 
 export default () => {
   const dispatch = useDispatch();
-  const selectedId = useSelector((s) => selectC2csampleState(s).selectingId);
-  const onClick = (id) => {
+  const selectedId = useSelector(selectC2csampleState).selectingId;
+  const onClick = (id: number) => {
     dispatch(setSelectingId(id));
   };
   return (

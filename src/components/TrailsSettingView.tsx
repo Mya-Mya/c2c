@@ -1,12 +1,7 @@
 import React from "react";
 import {
   Button,
-  Card,
-  Checkbox,
-  Container,
   FormControlLabel,
-  FormGroup,
-  Paper,
   Slider,
   Stack,
   Switch,
@@ -21,11 +16,8 @@ import {
 import { removeAllTrials } from "./WindPreviewView/trails";
 export default () => {
   const dispatch = useDispatch();
-  const automaticallyCreate = useSelector(
-    (s) => selectTrailsState(s).automaticallyCreate
-  );
-  const numTrailsGoal = useSelector((s) => selectTrailsState(s).numTrailsGoal);
-  const numTrailsNow = useSelector((s) => selectTrailsState(s).numTrailsNow);
+  const { automaticallyCreate, numTrailsGoal, numTrailsNow } =
+    useSelector(selectTrailsState);
   return (
     <Stack p={2} spacing={1}>
       <FormControlLabel
@@ -45,7 +37,7 @@ export default () => {
             step={1}
             min={0}
             max={300}
-            onChange={(e, value) => dispatch(setNumTrailsGoal(value))}
+            onChange={(_, value) => dispatch(setNumTrailsGoal(value))}
             value={numTrailsGoal}
           />
         }

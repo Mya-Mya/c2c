@@ -1,16 +1,11 @@
+import { RootState } from ".";
 import { createSlice } from "@reduxjs/toolkit";
 
-/**
- * @typedef {object}LevelState
- * @property {number} min
- * @property {number} max
- */
-
-/**@type {LevelState} */
 const initialState = {
   min: -3,
   max: 3,
 };
+
 const levelSlice = createSlice({
   name: "level",
   initialState,
@@ -24,9 +19,7 @@ const levelSlice = createSlice({
   },
 });
 
-/**
- * @returns {LevelState}
- */
-export const selectLevelState = (state) => state.level;
+export const selectLevelState = (state: RootState) => state.level;
 export const { setMin, setMax } = levelSlice.actions;
 export default levelSlice.reducer;
+export type LevelState = typeof initialState;

@@ -1,11 +1,5 @@
-import { createSelector, createSlice } from "@reduxjs/toolkit";
-
-/**
- * @typedef {object}TrailsState
- * @property {boolean} automaticallyCreate
- * @property {number} numTrailsGoal
- * @property {number} numTrailsNow
- */
+import { createSlice } from "@reduxjs/toolkit";
+import { RootState } from ".";
 
 const initialState = {
   automaticallyCreate: true,
@@ -29,11 +23,8 @@ const trailsSlice = createSlice({
   },
 });
 
-/**
- *
- * @returns {TrailsState}
- */
-export const selectTrailsState = (state) => state.trails;
+export const selectTrailsState = (state: RootState) => state.trails;
 export const { setAutomaticallyCreate, setNumTrailsGoal, setNumTrailsNow } =
   trailsSlice.actions;
 export default trailsSlice.reducer;
+export type TrailsState = typeof initialState;

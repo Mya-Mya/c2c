@@ -1,11 +1,8 @@
 import { createSelector, createSlice } from "@reduxjs/toolkit";
-import c2csamples, { C2CSample } from "../models/c2csamples";
+import { RootState } from ".";
+import c2csamples from "../models/c2csamples";
 import { ids } from "../models/c2csamples";
-/**
- * @typedef {object} C2CSampleState
- * @property {boolean} isSelecting
- * @property {number} selectingId
- */
+
 const initialState = {
   isSelecting: true,
   selectingId: ids[0],
@@ -19,17 +16,14 @@ const c2csampleSlice = createSlice({
       state.isSelecting = true;
       state.selectingId = action.payload;
     },
-    deselect(state, action) {
+    deselect(state) {
       state.isSelecting = false;
       state.selectingId = -1;
     },
   },
 });
 
-/**
- * @returns {C2CSampleState}
- */
-export const selectC2csampleState = (state) => state.c2csample;
+export const selectC2csampleState = (state: RootState) => state.c2csample;
 export const selectSelectingC2cSample = createSelector(
   selectC2csampleState,
   /**
@@ -41,3 +35,4 @@ export const selectSelectingC2cSample = createSelector(
 );
 export const { setSelectingId, deselect } = c2csampleSlice.actions;
 export default c2csampleSlice.reducer;
+export type C2CSampleState = typeof initialState;
