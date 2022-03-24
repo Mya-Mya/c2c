@@ -1,11 +1,4 @@
-import React from "react";
-import { useRecoilValue, useSetRecoilState } from "recoil";
-import {
-  automaticallyCreateState,
-  numTrailsGoalState,
-  numTrailsNowState,
-} from "../../states/trailsStates";
-import { minLevelState, maxLevelState } from "../../states/levelStates";
+import React, { useEffect } from "react";
 import _ from "./globals";
 import { setupTrails, drawTrails, addTrail } from "./trails";
 
@@ -14,15 +7,7 @@ import { P5Instance, ReactP5Wrapper } from "react-p5-wrapper";
 import Transformer from "../../models/Transformer";
 import drawAxis from "./drawAxis";
 import Complex from "complex.js";
-
-/**
- * @typedef {object} WindPreviewViewProps
- * @property {boolean} automaticallyCreateTrails
- * @property {number} numTrailsGoal
- * @property {number} minLevel
- * @property {number} maxLevel
- * @property {(n:number)=>void} onNumTrailsChange
- */
+import { useDispatch, useStore } from "react-redux";
 
 /**
  *
@@ -43,12 +28,8 @@ const sketch = (p) => {
     p.frameRate(10);
     setupTrails();
   };
-  /**
-   *
-   * @param {WindPreviewViewProps} props
-   */
   p.updateWithProps = (props) => {
-    _.props = props;
+    _.dispatch = props.dispatch;
   };
   p.draw = () => {
     //Update globals
@@ -85,13 +66,5 @@ const sketch = (p) => {
 };
 
 export default () => {
-  /**@type {WindPreviewViewProps} */
-  const p = {
-    automaticallyCreateTrails: useRecoilValue(automaticallyCreateState),
-    onNumTrailsChange: useSetRecoilState(numTrailsNowState),
-    minLevel: useRecoilValue(minLevelState),
-    maxLevel: useRecoilValue(maxLevelState),
-    numTrailsGoal: useRecoilValue(numTrailsGoalState),
-  };
-  return <ReactP5Wrapper sketch={sketch} {...p} />;
+  return <ReactP5Wrapper sketch={sketch} dispatch={useDispatch()} />;
 };

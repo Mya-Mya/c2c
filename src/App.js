@@ -1,13 +1,14 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import { Container, Grid, Stack } from "@mui/material";
-import { RecoilRoot } from "recoil";
 import WindPreviewView from "./components/WindPreviewView";
 import TrailsSettingView from "./components/TrailsSettingView";
 import LevelRangeView from "./components/LevelRangeView";
+import { store } from "./states";
+import { Provider } from "react-redux";
 const App = () => {
   return (
-    <RecoilRoot>
+    <Provider store={store}>
       <Container>
         <Stack spacing={1} pt={1}>
           <WindPreviewView />
@@ -21,7 +22,7 @@ const App = () => {
           </Grid>
         </Stack>
       </Container>
-    </RecoilRoot>
+    </Provider>
   );
 };
 

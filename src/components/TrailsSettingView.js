@@ -12,19 +12,20 @@ import {
   Switch,
   Typography,
 } from "@mui/material";
-import { useRecoilState, useRecoilValue } from "recoil";
+import { useDispatch, useSelector } from "react-redux";
 import {
-  automaticallyCreateState,
-  numTrailsGoalState,
-  numTrailsNowState,
-} from "../states/trailsStates";
+  selectTrailsState,
+  setAutomaticallyCreate,
+  setNumTrailsGoal,
+} from "../states/trailsSlice";
 import { removeAllTrials } from "./WindPreviewView/trails";
 export default () => {
-  const [automaticallyCreate, setAutomaticallyCreate] = useRecoilState(
-    automaticallyCreateState
+  const dispatch = useDispatch();
+  const automaticallyCreate = useSelector(
+    (s) => selectTrailsState(s).automaticallyCreate
   );
-  const [numTrailsGoal, setNumTrailsGoal] = useRecoilState(numTrailsGoalState);
-  const numTrailsNow = useRecoilValue(numTrailsNowState);
+  const numTrailsGoal = useSelector((s) => selectTrailsState(s).numTrailsGoal);
+  const numTrailsNow = useSelector((s) => selectTrailsState(s).numTrailsNow);
   return (
     <Paper>
       <Stack p={2} spacing={1}>
@@ -33,7 +34,9 @@ export default () => {
           control={
             <Switch
               checked={automaticallyCreate}
-              onChange={(e) => setAutomaticallyCreate(e.target.checked)}
+              onChange={(e) =>
+                dispatch(setAutomaticallyCreate(e.target.checked))
+              }
             />
           }
           label="Automatically Create"
@@ -46,7 +49,7 @@ export default () => {
               step={1}
               min={0}
               max={300}
-              onChange={(e, value) => setNumTrailsGoal(value)}
+              onChange={(e, value) => dispatch(setNumTrailsGoal(value))}
               value={numTrailsGoal}
             />
           }

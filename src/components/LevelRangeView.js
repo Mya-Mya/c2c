@@ -11,28 +11,32 @@ import {
   Switch,
   Typography,
 } from "@mui/material";
-import { useRecoilState, useRecoilValue } from "recoil";
-import { minLevelState, maxLevelState } from "../states/levelStates";
+import { selectLevelState, setMax, setMin } from "../states/levelSlice";
+import { useDispatch, useSelector } from "react-redux";
 export default () => {
-  const [minLevel, setMinLevel] = useRecoilState(minLevelState);
-  const [maxLevel, setMaxLevel] = useRecoilState(maxLevelState);
+  const dispatch = useDispatch();
+  const maxLevel = useSelector((s) => selectLevelState(s).max);
+  const minLevel = useSelector((s) => selectLevelState(s).min);
   const minLevelSpace = 1;
   const handleChange = (e, newValue, activeThumb) => {
     if (!Array.isArray(newValue)) return;
+    let newMinLevel, newMaxLevel;
     if (newValue[1] - newValue[0] < minLevelSpace) {
       if (activeThumb === 0) {
         const clamped = Math.min(newValue[0], 10 - minLevelSpace);
-        setMinLevel(clamped);
-        setMaxLevel(clamped + minLevelSpace);
+        newMinLevel = clamped;
+        newMaxLevel = clamped + minLevelSpace;
       } else {
         const clamped = Math.max(newValue[1], -10 + minLevelSpace);
-        setMinLevel(clamped - minLevelSpace);
-        setMaxLevel(clamped);
+        newMinLevel = clamped - minLevelSpace;
+        newMaxLevel = clamped;
       }
     } else {
-      setMinLevel(newValue[0]);
-      setMaxLevel(newValue[1]);
+      newMinLevel = newValue[0];
+      newMaxLevel = newValue[1];
     }
+    dispatch(setMin(newMinLevel));
+    dispatch(setMax(newMaxLevel));
   };
   return (
     <Paper>

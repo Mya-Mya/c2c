@@ -12,5 +12,5 @@ export default {
   /**@type {number} */ rightU: 0,
   /**@type {number} */ topV: 0,
   /**@type {number} */ bottomV: 0,
-  /**@type {WindPreviewViewProps} */ props: null,
+  /**@type {any=>void} */ dispatch: null,
 };
