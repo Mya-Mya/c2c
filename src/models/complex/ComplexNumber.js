@@ -26,7 +26,7 @@ export default class ComplexNumber {
     this._clearPolar();
   }
   _prepareXFromPolar() {
-    this.x = this.r * cos(this.t);
+    this.x = this.r * Math.cos(this.t);
   }
   //Y
   getY() {
@@ -39,7 +39,7 @@ export default class ComplexNumber {
     this._clearPolar();
   }
   _prepareYFromPolar() {
-    this.y = this.r * sin(this.t);
+    this.y = this.r * Math.sin(this.t);
   }
   //XY
   setXY(x, y) {
@@ -75,7 +75,7 @@ export default class ComplexNumber {
     this._clearXY();
   }
   _prepareTFromXY() {
-    this.t = atan2(this.y, this.x);
+    this.t = Math.atan2(this.y, this.x);
   }
   //Polar
   setPolar(r, t) {

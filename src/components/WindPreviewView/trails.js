@@ -1,24 +1,23 @@
-import ComplexNumber from "../../models/complex/ComplexNumber";
+import Complex from "complex.js";
 import _ from "./globals";
-import coperation from "../../models/complex/coperation";
-
-/**
- * @typedef {(ComplexNumber)=>ComplexNumber} ComplexFunc
- */
 
 class Particle {
+  /**
+   *
+   * @param {Complex.Complex} z
+   */
   constructor(z) {
     this.age = 0;
     this.z = z;
     this.fz = _.func(z);
-    this.fzSize = this.fz.getR();
+    this.fzSize = this.fz.abs();
     this.level = Math.log10(this.fzSize);
     this.next = undefined;
     this.updateXY();
   }
   updateXY() {
-    this.x = _.transformer.x(this.z.getX());
-    this.y = _.transformer.y(this.z.getY());
+    this.x = _.transformer.x(this.z.re);
+    this.y = _.transformer.y(this.z.im);
   }
 
   draw() {
@@ -44,23 +43,23 @@ class Particle {
     this.age++;
   }
   isInScreen() {
-    var u = this.z.getX();
-    var v = this.z.getY();
+    var u = this.z.re;
+    var v = this.z.im;
     return _.leftU <= u && u <= _.rightU && _.bottomV <= v && v <= _.topV;
   }
   /**
    * @returns {Particle}
    */
   createNext() {
-    var direction = coperation.divByRealByXY.n(this.fz, this.fzSize);
-    var z = coperation.add.n(this.z, direction);
+    var direction = this.fz.div(this.fzSize);
+    var z = this.z.add(direction);
     this.next = new Particle(z);
     return this.next;
   }
 }
 class Trail {
   /**
-   * @param {ComplexNumber} z
+   * @param {Complex} z
    */
   constructor(z) {
     var particle = new Particle(z);
@@ -100,8 +99,11 @@ export const addRandomTrail = () => {
   addTrail(u, v);
 };
 export const addTrail = (u, v) => {
-  /**@type {Trail}*/ const trail = new Trail(ComplexNumber.fromXY(u, v));
+  /**@type {Trail}*/ const trail = new Trail(Complex({ re: u, im: v }));
   trails.push(trail);
+};
+export const removeAllTrials = () => {
+  trails = [];
 };
 export const drawTrails = () => {
   _.p.push();

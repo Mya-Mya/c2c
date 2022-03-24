@@ -13,7 +13,7 @@ import ParticleStyle1 from "../../models/particlestyle/ParticleStyle1";
 import { P5Instance, ReactP5Wrapper } from "react-p5-wrapper";
 import Transformer from "../../models/Transformer";
 import drawAxis from "./drawAxis";
-import coperation from "../../models/complex/coperation";
+import Complex from "complex.js";
 
 /**
  * @typedef {object} WindPreviewViewProps
@@ -32,12 +32,14 @@ const sketch = (p) => {
   _.p = p;
   _.transformer = new Transformer(0, 0, 300, 200, 10);
   _.particleStyle = new ParticleStyle1();
-  _.func = (z) => coperation.exp.n(z);
+  _.func = (/**@type {Complex.Complex}*/ z) => {
+    return z.sin();
+  };
   let grabbing = false;
   let grabbingU = 0;
   let grabbingV = 0;
   p.setup = () => {
-    p.createCanvas(600, 400);
+    p.createCanvas(800, 400);
     p.frameRate(10);
     setupTrails();
   };
