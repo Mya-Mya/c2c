@@ -1,6 +1,7 @@
 import Complex from "complex.js";
 import _ from "./globals";
 import { store } from "../../states";
+import { selectSelectingC2cSample } from "../../states/c2csampleSlice";
 import { selectTrailsState, setNumTrailsNow } from "../../states/trailsSlice";
 import { selectLevelState } from "../../states/levelSlice";
 
@@ -12,7 +13,8 @@ class Particle {
   constructor(z) {
     this.age = 0;
     this.z = z;
-    this.fz = _.func(z);
+    const f = selectSelectingC2cSample(store.getState()).func;
+    this.fz = f(z);
     this.fzSize = this.fz.abs();
     this.level = Math.log10(this.fzSize);
     this.next = undefined;
