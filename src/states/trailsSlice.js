@@ -8,7 +8,7 @@ import { createSelector, createSlice } from "@reduxjs/toolkit";
  */
 
 const initialState = {
-  automaticallyCreate: false,
+  automaticallyCreate: true,
   numTrailsGoal: 100,
   numTrailsNow: 0,
 };
