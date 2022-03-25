@@ -1,10 +1,9 @@
 import ParticleStyle from "./ParticleStyle";
-export default class extends ParticleStyle {
+export default class implements ParticleStyle {
   private normalized: number;
   private cachedA: number;
   private cachedWeight: number;
   constructor() {
-    super();
     this.normalized = 0;
     this.cachedWeight = 0;
   }
